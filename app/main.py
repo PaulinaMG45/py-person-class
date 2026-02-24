@@ -9,16 +9,20 @@ class Person:
         self.name = name
         self.age = age
 
-            
         Person.people[name] = self
 
 
 def create_person_list(people: list) -> list:
 
-    Person.people.clear() 
+    Person.people.clear()
 
-    people_ls = [Person(name= person.get("name"), age= person.get("age")) for person in people]
-
+    people_ls = [
+        Person(
+            name=person.get("name"),
+            age=person.get("age"),
+        )
+        for person in people
+    ]
 
     for i, person in enumerate(people):
 
