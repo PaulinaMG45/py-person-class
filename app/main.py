@@ -4,35 +4,30 @@ class Person:
     def __init__(
         self,
         name: str,
-        age: int,
-        **kwargs
+        age: int
     ) -> None:
         self.name = name
         self.age = age
 
-        if kwargs.get("wife") is not None:
-            self.wife = kwargs.get("wife")
-
-        if kwargs.get("husband") is not None:
-            self.husband = kwargs.get("husband")
             
         Person.people[name] = self
 
 
 def create_person_list(people: list) -> list:
 
-    people_ls = [Person(**person) for person in people]
+    Person.people.clear() 
 
-    print(people_ls)
+    people_ls = [Person(name= person.get("name"), age= person.get("age")) for person in people]
 
-    for person in people_ls:
 
-        if hasattr(person, "wife") and person.wife is not None:
-            name = person.wife
-            person.wife = Person.people[name]
+    for i, person in enumerate(people):
 
-        if hasattr(person, "husband") and person.husband is not None:
-            name = person.husband
-            person.husband = Person.people[name]
+        wife_name = person.get("wife", None)
+        if wife_name is not None:
+            people_ls[i].wife = Person.people[wife_name]
+
+        husband_name = person.get("husband", None)
+        if husband_name is not None:
+            people_ls[i].husband = Person.people[husband_name]
 
     return people_ls
